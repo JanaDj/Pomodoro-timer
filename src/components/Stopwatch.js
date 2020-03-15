@@ -3,47 +3,41 @@ import React, {Component} from 'react';
 class Stopwatch extends Component {
 
     state = {
-        isRunning: false,
-        elapsedTime: 0,
-        previousTime: 0
-    };
+        timerOn: false,
+        timerStart: 0,
+        timerTime: 0
+      };
 
-    handleStopwatch = () => {
-        this.setState(prevState => ({
-            isRunning: !prevState.isRunning
-        }));
-        if (!this.state.isRunning) {
-            this.setState({
-                previousTime: Date.now()
-            })
-        }
-    }
-
-    handleReset = () => {
+      startTimer = () => {
         this.setState({
-            elapsedTime: 0
+          timerOn: true,
+          timerTime: this.state.timerTime,
+          timerStart: Date.now() - this.state.timerTime
         });
-    }
+        this.timer = setInterval(() => {
+          this.setState({
+            timerTime: Date.now() - this.state.timerStart
+          });
+        }, 10);
+      };
 
-    componentDidMount() {
-        this.intervalID = setInterval( () => this.tick(), 100);
-    }
+      stopTimer = () => {
+        this.setState({ timerOn: false });
+        clearInterval(this.timer);
+      };
 
-    componentWillUnmount() {
-        clearInterval(this.intervalId);
-    }
-    
-    tick = () => {
-        if (this.state.isRunning) {
-            const now = Date.now();
-            this.setState( prevState => ({
-                previousTime: now,
-                elapsedTime: prevState.elapsedTime + (now - this.state.previousTime)
-            }));
-        }
-    }
+      resetTimer = () => {
+        this.setState({
+          timerStart: 0,
+          timerTime: 0
+        });
+      };
+
     render() {
-        const seconds = Math.floor(this.state.elapsedTime / 1000);
+        const { timerTime } = this.state;
+        let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+        let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+
         return (
             <div className="stopwatch">
                 <div id="manageTimerBtns">
@@ -53,14 +47,22 @@ class Stopwatch extends Component {
                 </div>
                 <h2>Stopwatch</h2> 
                 <div id="clockContainer">
-                    <span className="stopwatch-time">  { seconds } </span>
+                    <span className="stopwatch-time">  { minutes } </span>
                     <span className="stopwatch-time">  : </span>
                     <span className="stopwatch-time">  { seconds } </span>
                 </div>
-                <button className="green" onClick={this.handleStopwatch}>
-                    { this.state.isRunning ? "Stop" : "Start" }
-                </button>
-                <button className="green" onClick={this.handleReset}>Reset</button>
+                {this.state.timerOn === false && this.state.timerTime === 0 && (
+                <button className="green" onClick={this.startTimer}>Start</button>
+                )}
+                {this.state.timerOn === true && (
+                <button className="green" onClick={this.stopTimer}>Stop</button>
+                )}
+                {this.state.timerOn === false && this.state.timerTime > 0 && (
+                <button className="green" onClick={this.startTimer}>Resume</button>
+                )}
+                {this.state.timerOn === false && this.state.timerTime > 0 && (
+                <button className="green" onClick={this.resetTimer}>Reset</button>
+                )}
 
                 <div id="setTimesContainer">
                     <div className="timerItemContainer">
