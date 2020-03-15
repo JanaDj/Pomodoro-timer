@@ -1,3 +1,6 @@
+html {
+  height: 100%;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +8,75 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* custom styles here */
+
+#timer {
+  height: 800px;
+  background-image: url("./assets/imageedit_1_3035839324.png");
+  background-size: scale;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.stopwatch {
+  display: inline-block;
+  text-align: center;
+}
+
+.stopwatch-time {
+  font-family: monospace;
+  font-size: 2.15em;
+}
+
+.stopwatch button {
+  margin: 8px 5px;
+  border-radius: 5px;
+  padding: 7px 8px;
+  border: none;
+  color: #fff;
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+.stopwatch button:hover,
+input[type=submit]:hover {
+  background: #fff;
+  cursor: pointer;
+  color: black;
+}
+
+.stopwatch h2 {
+  font-size: 1.5em;
+  margin: 0;
+  text-align: center;
+  font-weight: normal;
+  letter-spacing: 2px;
+}
+
+.pomodoroLabel {
+  /* border: 1px solid black; */
+  margin: 3px;
+  padding: 1px;
+  
+}
+
+.timerItemContainer {
+  display: inline-block;
+  text-align: center;
+  margin: 3px;
+  padding: 1px;
+  
 }

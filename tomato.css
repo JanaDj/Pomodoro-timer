@@ -1,0 +1,9 @@
+* {
+    margin: 0 auto;
+    padding: 0 auto;
+}
+#timer {
+    height: 800px;
+    background-image: url("imageedit_1_3035839324.png");
+    background-repeat: no-repeat;
+}
